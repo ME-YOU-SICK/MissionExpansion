@@ -57,6 +57,7 @@
     "eslint": "latest",
     "prettier": "latest",
     "vitest": "latest",
-    "@testing-library/react": "latest"
+    "@testing-library/react": "latest",
+    "@tailwindcss/postcss": "latest"
   }
 }
