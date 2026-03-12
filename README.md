@@ -1,67 +1,112 @@
 # Mission Expansion
 
-Mission Expansion is scaffolded as a premium **Next.js App Router** platform for lifelong learning, combining a high-performance WebGL knowledge graph with rigorous learning-state, retention, and backend content pipelines.
+Mission Expansion is a premium **Next.js App Router** app scaffold for lifelong learning, combining a high-performance WebGL knowledge graph with lesson/quiz workflows and platform plumbing (auth, state, styling, and backend-ready config).
 
-## Tech Stack & Architecture
+## Local Run Guide
 
-### 1) WebGL & Graph
-- **@react-three/fiber**: React renderer for Three.js so our graph scene can be composed declaratively while staying performant.
-- **@react-three/drei**: Provides production-ready helpers (controls, effects, abstractions) to accelerate premium 3D scene development.
-- **three**: Core 3D engine used to render and animate the Knowledge Web.
-- **react-force-graph-3d**: Supplies force-directed graph rendering primitives for large, interactive node-link datasets.
-- **d3-force**: Handles graph physics simulation (repulsion, attraction, stabilization) for natural node layout.
+### 1) Prerequisites
+- **Node.js 20+** (recommended: latest LTS)
+- **npm 10+**
 
-### 2) UI & Styling
-- **tailwindcss**: Utility-first styling system for fast, consistent, design-token-driven UI implementation.
-- **tailwind-merge**: Resolves conflicting Tailwind classes when building dynamic component APIs.
-- **clsx**: Conditionally composes class names for ergonomic variant-based styling.
-- **tailwindcss-animate**: Standardized animation utility layer compatible with modern utility-first workflows.
-- **@radix-ui/react-slot**: Composition primitive for building accessible, polymorphic UI foundations.
-- **class-variance-authority**: Centralizes component variant logic (size, intent, state) in a typed, scalable API.
-- **lucide-react**: Clean, consistent icon set aligned with premium product aesthetics.
+Check versions:
+```bash
+node -v
+npm -v
+```
 
-### 3) Animations
-- **framer-motion**: Declarative interaction and layout animation system for smooth UI transitions.
-- **gsap**: High-performance imperative timeline engine for advanced motion choreography.
-- **@gsap/react**: React integration for GSAP lifecycle-safe animations.
-- **@studio-freight/lenis**: Smooth scrolling engine for polished, high-end motion feel.
-- **use-sound**: Lightweight hook for audio micro-interactions and feedback loops.
-- **canvas-confetti**: Controlled reward/celebration effects for mastery milestones.
+### 2) Install dependencies
+```bash
+npm install
+```
 
-### 4) Forms, State & Logic
-- **react-hook-form**: Performant form state management for quiz flows and complex user input.
-- **zod**: Runtime schema validation for reliable, typed domain contracts.
-- **date-fns**: Deterministic date/time utilities for retention and spaced repetition scheduling.
-- **zustand**: Lightweight global state store for client-side learning/session state slices.
-- **@hookform/resolvers**: Bridges schema validators like Zod into form validation pipelines.
+### 3) Environment variables
+Create `.env.local` in the project root.
 
-### 5) Data & DB
-- **@tanstack/react-query**: Fetching/caching/mutation orchestration for resilient client-server data workflows.
-- **drizzle-orm**: Type-safe ORM for PostgreSQL-backed domain modeling and persistence.
-- **superjson**: Preserves rich JS data types across serialization boundaries.
-- **postgres**: Minimal PostgreSQL driver for runtime DB connectivity.
+Minimum Clerk variables (required because `ClerkProvider` + middleware are enabled):
+```bash
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxx
+CLERK_SECRET_KEY=sk_test_xxx
+```
 
-### 6) Auth
-- **@clerk/nextjs**: Managed authentication and session infrastructure for secure user access.
+Optional (for future DB wiring):
+```bash
+DATABASE_URL=postgres://...
+```
 
-### 7) AI
-- **ai**: Vercel AI SDK abstraction for provider-agnostic AI workflows in app/server contexts.
-- **openai**: Official OpenAI client for staged content generation pipelines.
+### 4) Start dev server
+```bash
+npm run dev
+```
+Then open:
+- `http://localhost:3000/dashboard`
+- `http://localhost:3000/graph`
+- `http://localhost:3000/lesson/psychology-behavioral`
+- `http://localhost:3000/quiz/psychology-behavioral-quiz`
 
-### 8) Dev & DB Tools
-- **drizzle-kit**: Migration and schema tooling for Drizzle workflows.
-- **eslint**: Static analysis and code quality enforcement.
-- **prettier**: Consistent automated formatting across the repository.
-- **vitest**: Fast unit/integration test runner for logic-heavy modules.
-- **@testing-library/react**: User-centric React component testing utilities.
+### 5) Build and run production mode
+```bash
+npm run build
+npm run start
+```
 
-## Current Scaffold Focus
+---
 
-This iteration intentionally provides **configuration and platform plumbing only**:
-- Next.js App Router structure in `src/app`
-- Provider composition in `src/providers/app-providers.tsx`
-- Clerk middleware at repository root (`middleware.ts`)
-- Drizzle configuration skeleton (`drizzle.config.ts`)
-- Shared utility foundation (`src/lib/utils/cn.ts`)
+## Troubleshooting
 
-No feature UIs, graph rendering components, or learning algorithms are implemented in this step.
+### A) `experimental.typedRoutes has been moved to typedRoutes`
+This repo already uses the correct key in `next.config.mjs`:
+```js
+typedRoutes: true
+```
+If you still see this warning, clear stale caches and restart:
+```bash
+rm -rf .next node_modules
+npm install
+npm run dev
+```
+
+### B) `Cannot apply unknown utility class border-border`
+This repo is already patched to avoid that Tailwind v4 PostCSS issue in global CSS.
+If it reappears, ensure your `src/app/globals.css` does **not** use `@apply border-border` and instead uses direct CSS variable border color.
+
+### C) Tailwind PostCSS plugin error
+If you see:
+> trying to use `tailwindcss` directly as a PostCSS plugin
+
+Make sure `postcss.config.mjs` uses:
+```js
+plugins: {
+  '@tailwindcss/postcss': {},
+  autoprefixer: {}
+}
+```
+and `@tailwindcss/postcss` is installed.
+
+### D) Raw unstyled HTML (purple links / serif font)
+Verify all three are true:
+1. `src/app/globals.css` includes:
+   - `@tailwind base;`
+   - `@tailwind components;`
+   - `@tailwind utilities;`
+2. `tailwind.config.ts` content includes:
+   - `./src/**/*.{js,ts,jsx,tsx,mdx}`
+3. `src/app/layout.tsx` applies the Inter class from `next/font/google` to `<body>`.
+
+---
+
+## Useful scripts
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+npm run typecheck
+npm run test
+```
+
+## Tech Stack (Current)
+- Next.js App Router + TypeScript
+- Tailwind CSS + design token variables
+- Zustand stores for UI/graph/learning/quiz state
+- React Query + Clerk provider plumbing
+- Three.js + react-force-graph-3d for the Knowledge Web
