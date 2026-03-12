@@ -1,0 +1,11 @@
+{
+  "name": "mission-expansion",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Mission Expansion - static MVP",
+  "scripts": {
+    "dev": "python3 -m http.server 4173",
+    "test": "node tests/spaced-repetition.test.js"
+  },
+  "type": "module"
+}
