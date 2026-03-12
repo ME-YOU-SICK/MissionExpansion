@@ -1,11 +1,37 @@
 {
   "name": "mission-expansion",
+  "version": "0.2.0",
   "private": true,
-  "version": "1.0.0",
-  "description": "Mission Expansion - static MVP",
+  "type": "module",
   "scripts": {
-    "dev": "python3 -m http.server 4173",
-    "test": "node tests/spaced-repetition.test.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
   },
-  "type": "module"
+  "dependencies": {
+    "next": "15.0.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "zustand": "5.0.1",
+    "framer-motion": "11.11.17",
+    "gsap": "3.12.5",
+    "three": "0.170.0",
+    "@react-three/fiber": "8.17.10",
+    "@react-three/drei": "9.119.0",
+    "react-force-graph-3d": "1.24.6",
+    "zod": "3.23.8",
+    "clsx": "2.1.1",
+    "tailwind-merge": "2.5.4"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3",
+    "tailwindcss": "3.4.15",
+    "postcss": "8.4.49",
+    "autoprefixer": "10.4.20",
+    "@types/node": "22.9.0",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1"
+  }
 }
