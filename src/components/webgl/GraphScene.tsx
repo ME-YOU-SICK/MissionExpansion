@@ -24,13 +24,13 @@ function mixMasteryColor(groupColor: string, mastery: number): THREE.Color {
 
 function isLinkConnectedToNode(link: SceneLink, nodeId: string | null): boolean {
   if (!nodeId) return false;
-  const sourceId = typeof link.source === 'object' ? String(link.source.id) : String(link.source);
-  const targetId = typeof link.target === 'object' ? String(link.target.id) : String(link.target);
+  const sourceId = typeof link.source === 'object' ? String((link.source as SceneNode).id) : String(link.source);
+  const targetId = typeof link.target === 'object' ? String((link.target as SceneNode).id) : String(link.target);
   return sourceId === nodeId || targetId === nodeId;
 }
 
 export function GraphScene() {
-  const graphRef = useRef<ForceGraphMethods<SceneNode, SceneLink>>();
+  const graphRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 1200, height: 760 });
 
@@ -60,8 +60,6 @@ export function GraphScene() {
     renderer.setClearColor(0x000000, 0);
 
     graphRef.current.d3Force('charge')?.strength(-180);
-    graphRef.current.d3VelocityDecay(0.28);
-    graphRef.current.d3AlphaDecay(0.03);
     graphRef.current.cameraPosition({ z: 360 });
   }, []);
 
@@ -106,18 +104,6 @@ export function GraphScene() {
           return mesh;
         }}
         nodeThreeObjectExtend={false}
-        nodeThreeObjectUpdate={(object, node) => {
-          const mesh = object as THREE.Mesh;
-          const currentScale = mesh.scale.x;
-          const id = (node as SceneNode).id;
-
-          const isFocused = id === hoveredNodeId;
-          const isSelected = id === selectedNodeId;
-          const targetScale = isFocused ? 1.2 : isSelected ? 1.12 : 1;
-
-          const nextScale = currentScale + (targetScale - currentScale) * 0.2;
-          mesh.scale.setScalar(nextScale);
-        }}
       />
     </div>
   );

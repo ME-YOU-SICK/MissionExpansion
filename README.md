@@ -93,6 +93,17 @@ Verify all three are true:
    - `./src/**/*.{js,ts,jsx,tsx,mdx}`
 3. `src/app/layout.tsx` applies the Inter class from `next/font/google` to `<body>`.
 
+
+### E) 404 on lesson/quiz pages from navigation
+This repo now routes sidebar links to concrete seeded routes:
+- `/lesson/psychology-behavioral`
+- `/quiz/psychology-behavioral-quiz`
+
+Index shortcuts are also available:
+- `/lesson` → redirects to `/lesson/psychology-behavioral`
+- `/quiz` → redirects to `/quiz/psychology-behavioral-quiz`
+
+
 ---
 
 ## Useful scripts
