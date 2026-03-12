@@ -1,7 +1,14 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
-import './globals.css';
 import { AppProviders } from '@/providers/app-providers';
+import './globals.css';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap'
+});
 
 export const metadata: Metadata = {
   title: 'Mission Expansion',
@@ -10,8 +17,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body className="bg-background text-foreground antialiased">
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className={`${inter.className} ${inter.variable} min-h-screen`}>
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
