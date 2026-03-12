@@ -18,7 +18,7 @@ export type GraphData = {
 export const initialGraphData: GraphData = {
   nodes: [
     { id: 'Psychology', label: 'Psychology', group: 'psychology', mastery: 72 },
-    { id: 'Behavioral', label: 'Behavioral', group: 'psychology', mastery: 38 },
+    { id: 'psychology-behavioral', label: 'Behavioral', group: 'psychology', mastery: 38 },
     { id: 'Cognitive', label: 'Cognitive', group: 'psychology', mastery: 91 },
     { id: 'Neuroscience', label: 'Neuroscience', group: 'science', mastery: 10 },
     { id: 'Coding', label: 'Coding', group: 'coding', mastery: 53 },
@@ -28,7 +28,7 @@ export const initialGraphData: GraphData = {
     { id: 'Statistics', label: 'Statistics', group: 'math', mastery: 48 }
   ],
   links: [
-    { source: 'Psychology', target: 'Behavioral' },
+    { source: 'Psychology', target: 'psychology-behavioral' },
     { source: 'Psychology', target: 'Cognitive' },
     { source: 'Psychology', target: 'Neuroscience' },
     { source: 'Coding', target: 'Algorithms' },

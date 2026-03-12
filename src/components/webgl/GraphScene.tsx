@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import ForceGraph3D, { type ForceGraphMethods, type LinkObject, type NodeObject } from 'react-force-graph-3d';
 import * as THREE from 'three';
-import { initialGraphData, type GraphLink, type GraphNode } from '@/lib/utils/mockGraphData';
+import type { GraphLink, GraphNode } from '@/lib/utils/mockGraphData';
 import { useGraphStore } from '@/store/useGraphStore';
 
 type SceneNode = NodeObject<GraphNode> & GraphNode;
@@ -34,6 +34,7 @@ export function GraphScene() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 1200, height: 760 });
 
+  const graphData = useGraphStore((state) => state.graphData);
   const selectedNodeId = useGraphStore((state) => state.selectedNodeId);
   const hoveredNodeId = useGraphStore((state) => state.hoveredNodeId);
   const setHoveredNodeId = useGraphStore((state) => state.setHoveredNodeId);
@@ -70,7 +71,7 @@ export function GraphScene() {
         ref={graphRef}
         width={dimensions.width}
         height={dimensions.height}
-        graphData={initialGraphData}
+        graphData={graphData}
         backgroundColor="rgba(0,0,0,0)"
         enableNodeDrag={false}
         showNavInfo={false}
