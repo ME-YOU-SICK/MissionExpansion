@@ -38,6 +38,7 @@ DATABASE_URL=postgres://...
 npm run dev
 ```
 Then open:
+- `http://localhost:3000/` (auto-redirects to `/dashboard`)
 - `http://localhost:3000/dashboard`
 - `http://localhost:3000/graph`
 - `http://localhost:3000/lesson/psychology-behavioral`
